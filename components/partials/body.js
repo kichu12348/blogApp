@@ -5,7 +5,7 @@ import NetInfo from "@react-native-community/netinfo";
 import Blogs from "./smallStuff/blogs";
 import React, { useState, useEffect, useMemo } from "react";
 
-const BlogList = ({ supabase,isAddBlog,run , setRun}) => {
+const BlogList = ({ supabase}) => {
   const [blogs, setBlogs] = useState([]);
   const [isConnected, setIsConnected] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -44,36 +44,32 @@ const BlogList = ({ supabase,isAddBlog,run , setRun}) => {
       }
     };
 
-    const interval = setInterval(() => {
-      if (isConnected && blogs.length > 0) {
-        checkUpdates();
-      }
-    }, 5000); // Check for updates every 5 seconds
-
     checkInternetConnection();
-
-    return () => clearInterval(interval);
   }, [supabase, isConnected]);
+
+  useEffect(() => {
+  
+    if (isConnected) {
+    const interval = setInterval(() => {
+      checkUpdates();
+    }, 6000);
+    return () => clearInterval(interval);
+    }
+  },[isConnected, blogs]);
 
   const checkUpdates = async () => {
     const { data, error } = await supabase.from("blogs").select("*");
     if (error) {
       console.log(error);
     } else {
-      const newBlogs = data.filter((blog) => !blogs.some((b) => b.id === blog.id));
-      if (newBlogs.length > 0) {
-        setBlogs((prev) => [...prev, ...newBlogs]);
-        await AsyncStorage.setItem("blogs", JSON.stringify([...blogs, ...newBlogs]));
+      const existingBlogIds = blogs.map((blog) => blog.id);
+      const newBlogs = data.filter((blog) => !existingBlogIds.includes(blog.id));
+      if (newBlogs.length > 0 && newBlogs.length !== blogs.length) {
+        setBlogs((prev) => [...new Set([...prev, ...newBlogs])]);
+        await AsyncStorage.setItem("blogs", JSON.stringify([...new Set([...blogs, ...newBlogs])]));
       }
     }
   };
-
-  useEffect(() => {
-    if(isAddBlog && run){
-      checkUpdates()
-      setRun(false)
-    }
-  },[isAddBlog])
 
   const openBlog = (blog) => {
     setSelectedBlog(blog);

@@ -8,7 +8,7 @@ import songBtn from '../images/songBtn.png';
 import SongPlayer from './smallStuff/songPlayer';
 
 
-const Footer = ({supabase,setIsAddBlog,setRun}) => {
+const Footer = ({supabase}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibleB, setModalVisibleB] = useState(false);
   const [modalVisibleC, setModalVisibleC] = useState(false);
@@ -37,7 +37,6 @@ const Footer = ({supabase,setIsAddBlog,setRun}) => {
   };
 
   const slideUpB = () => {
-    setIsAddBlog(false)
     setModalVisibleB(true);
     Animated.timing(slideAnimB, {
       toValue: 1,
@@ -47,8 +46,6 @@ const Footer = ({supabase,setIsAddBlog,setRun}) => {
   };
 
   const slideDownB = () => {
-    setIsAddBlog(true)
-    setRun(true)
     Animated.timing(slideAnimB, {
       toValue: 0,
       duration: 300,
@@ -182,17 +179,15 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
     closeButton: {
-        position: 'absolute',
-        top: 0,
-        right: 20,
-        width: 50,
-        height: 50,
-        alignItems: 'flex-end',
-        justifyContent: 'flex-start',
+      width: "100%",
+      alignItems: "flex-end",
+      justifyContent: "center",
     },
     closeButtonImage: {
         width: 30,
         height: 30,
+        marginRight: 10,
+        marginTop: 10,
     },
 });
 

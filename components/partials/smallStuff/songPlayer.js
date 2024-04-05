@@ -100,7 +100,7 @@ const songPlayer = () => {
                 width: `${
                   (playbackStatus?.positionMillis /
                     playbackStatus?.durationMillis) *
-                  100
+                  100+4.5
                 }%`,
               },
             ]}
@@ -127,7 +127,7 @@ const songPlayer = () => {
                 width: `${
                   (playbackStatus?.positionMillis /
                     playbackStatus?.durationMillis) *
-                  100
+                  100+4.5
                 }%`,
               },
             ]}
@@ -154,7 +154,7 @@ const songPlayer = () => {
                 width: `${
                   (playbackStatus?.positionMillis /
                     playbackStatus?.durationMillis) *
-                  100
+                  100+4.5
                 }%`,
               },
             ]}

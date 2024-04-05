@@ -6,12 +6,18 @@ const Blogs = ({ blog, onClose }) => {
   return (
     <View style={styles.container}>
       <View style={{ width: "100%" }}>
-        <Text style={[styles.fontStyles, { fontWeight: "bold", fontSize: 30, marginHorizontal: 20 }]}>
-          {blog.title}
-        </Text>
-        <TouchableOpacity onPress={onClose} style={{ width: 30, height: 30, position: "absolute", right: 10, top: 10 }}>
-          <Image source={closeBtn} style={{ width: 30, height: 30 }} />
-        </TouchableOpacity>
+        <View  style={{
+          width:"100%",
+          alignItems: "flex-end",
+          padding: 20,
+        }}>
+          <TouchableOpacity onPress={onClose} style={{
+            width: 35,
+            height: 35,
+          }}>
+            <Image source={closeBtn} style={{ width: 30, height: 30 }} />
+          </TouchableOpacity>
+        </View>
       </View>
       <Image source={readingIMG} resizeMode="cover" style={{ width: "100%", height: "100%", position: "absolute", zIndex: -1 }} />
       <View
@@ -29,6 +35,7 @@ const Blogs = ({ blog, onClose }) => {
         }}
       >
         <ScrollView style={styles.scrollView}>
+          <Text style={[styles.fontStyles, { fontWeight: "bold", fontSize: 30 }]}>{blog.title}</Text>
           <Text style={styles.fontStyles}>{blog.body}</Text>
         </ScrollView>
       </View>
@@ -53,6 +60,7 @@ const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: "transparent",
     marginHorizontal: 15,
+    width: "95%",
   },
 });
 
